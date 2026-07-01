@@ -263,6 +263,7 @@
     </a>
     <div class="nav-links">
       <a href="#collection" class="nav-link">Collection</a>
+      <a href="#artifact-history" class="nav-link">History</a>
       <a href="#about" class="nav-link">About</a>
       <a href="#reviews" class="nav-link">Reviews</a>
       <a href="https://elevile.etsy.com" target="_blank" rel="noopener noreferrer" class="btn-gold">Shop on Etsy</a>
@@ -271,6 +272,7 @@
   </div>
   <div class="mobile-menu" id="mobileMenu">
     <a href="#collection" class="nav-link">Collection</a>
+    <a href="#artifact-history" class="nav-link">History</a>
     <a href="#about" class="nav-link">About</a>
     <a href="#reviews" class="nav-link">Reviews</a>
     <a href="https://elevile.etsy.com" target="_blank" rel="noopener noreferrer" class="btn-gold">Shop on Etsy</a>
@@ -319,6 +321,153 @@
     <a href="https://elevile.etsy.com" target="_blank" rel="noopener noreferrer" class="btn-gold">See All 13 Pieces on Etsy</a>
   </div>
 </section>
+
+<!-- ARTIFACT HISTORY -->
+<style>
+  #artifact-history {
+    padding: 6rem 2rem;
+    background: var(--dark-alt);
+    border-top: 1px solid var(--border);
+  }
+  .ah-inner { max-width: 860px; margin: 0 auto; }
+  .ah-header { text-align: center; margin-bottom: 3rem; }
+  .ah-header h2 {
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 600; color: var(--cream); margin: 0.75rem 0 1rem;
+  }
+  .ah-header h2 em { color: var(--gold); font-style: italic; }
+  .ah-header p { color: var(--muted-light); font-size: 1rem; max-width: 560px; margin: 0 auto; line-height: 1.6; }
+
+  .ah-item {
+    border-bottom: 1px solid var(--border);
+  }
+  .ah-item summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 1.25rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .ah-item summary::-webkit-details-marker { display: none; }
+  .ah-item summary .ah-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: var(--cream);
+  }
+  .ah-item summary .ah-era {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+  .ah-item summary .ah-plus {
+    font-family: 'Lato', sans-serif;
+    font-size: 1.3rem;
+    color: var(--gold);
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+  }
+  .ah-item[open] summary .ah-plus { transform: rotate(45deg); }
+  .ah-body {
+    padding: 0 0 1.5rem;
+    color: var(--muted-light);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    max-width: 680px;
+  }
+</style>
+
+<section id="artifact-history">
+  <div class="ah-inner">
+    <div class="ah-header reveal">
+      <span class="section-label">The Stories Behind The Stone</span>
+      <h2>Artifact <em>History</em></h2>
+      <p>Every piece in the Elevile collection is cast from a real object with a documented past. Tap a piece below to read the story behind the original.</p>
+    </div>
+
+    <div class="ah-list" id="historyList"></div>
+  </div>
+</section>
+
+<script>
+  const artifactHistory = [
+    {
+      name: "The Stargazer",
+      era: "Anatolia, c. 3000 BCE",
+      text: "No one knows what this figure is looking at. Carved 5,000 years ago in Chalcolithic Anatolia, its flat disc head is tilted permanently skyward, arms folded in a pose no other prehistoric culture used quite the same way. Fewer than fifteen of these Kiliya-type figurines exist, and archaeologists still argue over whether they're deities, ancestors, or star charts in human form. The mystery hasn't hurt its value: the original sold at Christie's in 2017 for over $14 million, one of the highest prices ever paid for a prehistoric object."
+    },
+    {
+      name: "The Ambum Stone",
+      era: "Papua New Guinea, ~3500–1500 BCE",
+      text: "This is a sculpture of an animal that doesn't quite exist. Carved from smooth greywacke somewhere in the New Guinea highlands, it fuses the curled body of a nocturnal marsupial with the swollen belly of an embryo — too deliberate to be accidental, too strange to identify. It's one of the oldest and most technically accomplished stone carvings ever found in the Pacific, made by a culture that left almost no other trace of itself. The original now sits in the National Gallery of Australia."
+    },
+    {
+      name: "Lepenski Vir Stone Idol",
+      era: "Danube Gorge, Serbia, c. 9500–6000 BCE",
+      text: "These faces were carved by people watching their world change forever. At the river settlement of Lepenski Vir, Mesolithic communities shaped river boulders into fish-like faces mid-transformation into human ones, and set them inside trapezoidal shrines — sculpture older than Stonehenge or the pyramids by thousands of years. The site itself was only discovered in the 1960s, during surveys ahead of a hydroelectric dam that would have drowned it forever, making its excavation as much a rescue as a discovery."
+    },
+    {
+      name: "The Guennol Lioness",
+      era: "Mesopotamia/Elam, c. 3000–2800 BCE",
+      text: "It's smaller than a shot glass and sold for more than most people's houses. Barely eight centimetres tall, this limestone figure fuses a lion's head and claws onto a powerfully muscled human torso — one of the earliest known depictions of a human-animal hybrid deity, carved at the very dawn of Mesopotamian civilisation. In 2007 the original sold at Sotheby's for $57.2 million, a record at the time for any sculpture at auction, ancient or modern."
+    },
+    {
+      name: "Venus of Renancourt",
+      era: "Amiens, France, c. 23,000 BCE",
+      text: "Road crews aren't supposed to find Ice Age art. In 2019, construction work on the outskirts of Amiens turned up not one figurine but fifteen, carved from chalk and clustered together — the richest concentration of Gravettian-period Venus figures ever found in northern France. Finding that many in one place let researchers study something usually impossible with prehistoric art: how a single community made and used the same kind of object, again and again, over generations."
+    },
+    {
+      name: "Neolithic Stone Mask",
+      era: "Judean Hills, ~9000 years old",
+      text: "This is, as far as anyone knows, the oldest face ever carved by human hands — older than writing, the wheel, or pottery. Shaped from limestone during the Pre-Pottery Neolithic period, masks like this are thought to have been worn in ancestor-veneration rites, part of a broader Levantine tradition that also produced plastered skulls modelled to resemble the recently dead. Their rarity and age make them intensely sought after: one example sold at Christie's for over $1 million."
+    },
+    {
+      name: "Makapansgat Pebble",
+      era: "South Africa, 2.5–3 million years old",
+      text: "No chisel ever touched this stone — its face-like pattern of pits is entirely the work of erosion. What makes it remarkable is who picked it up. Found among Australopithecus africanus remains in a cave more than 30 kilometres from the nearest matching rock, it must have been carried there on purpose, meaning something that lived millions of years before modern humans noticed a face in a rock and decided it was worth keeping. Many researchers treat it as the earliest known evidence of symbolic thought on Earth."
+    },
+    {
+      name: "Venus of Willendorf",
+      era: "Austria, c. 28,000–25,000 BCE",
+      text: "It has no face, no feet, and it's one of the most famous artworks in human history. Found by a workman in 1908 near the Austrian village of Willendorf, this 11-centimetre limestone figure was carved 25,000 years before the Egyptian pyramids, its exaggerated form and traces of red ochre pigment still fuelling debate over whether it's a fertility symbol, a self-portrait, or something else entirely. More than a century of study hasn't settled the question, which is part of why it endures."
+    },
+    {
+      name: "Venus of Monruz",
+      era: "Neuchâtel, Switzerland, c. 13,000 years old",
+      text: "Small enough to wear, old enough to predate the end of the last Ice Age. Carved from jet-black lignite, these pendant-sized figures were found at a Magdalenian-period campsite on the shore of Lake Neuchâtel, at a time when Alpine glaciers were still retreating from the valley. Palaeolithic art of any kind is rare in Switzerland, which makes the Monruz figurines among the most significant prehistoric finds the country has ever produced."
+    },
+    {
+      name: "The Olmec Guardian",
+      era: "Mesoamerica, c. 1200–400 BCE",
+      text: "Long before the Maya or the Aztec, the Olmec were laying down the artistic and religious template both civilisations would inherit — earning them the title \"mother culture\" of Mesoamerica. Best known for colossal carved stone heads weighing many tonnes, Olmec sculptors also made smaller figures blending human and jaguar features, tied to shamanic transformation myths that would echo through Mesoamerican art for the next two thousand years."
+    },
+    {
+      name: "Infinity Sculpture",
+      era: "Contemporary design",
+      text: "Not a replica — a deliberate break from one. This cast concrete love knot takes the mathematical form of a continuous loop with no beginning or end, sitting in the collection as a quieter, modern counterpoint to objects thousands of years old. It's less about history and more about what these ancient forms have in common with good design at any point in time: proportion, weight, and a shape that rewards being picked up."
+    },
+    {
+      name: "Concrete Oloid",
+      era: "Mathematical form, discovered 1929",
+      text: "This shape does something no other solid can: as it rolls, it touches every single point on its own surface. Discovered in 1929 by German sculptor and engineer Paul Schatz, the oloid is formed from two congruent circles set at right angles to each other, and its strange rolling motion has since been put to use in industrial mixing equipment, where that full-surface contact makes it unusually effective. Cast here in raw concrete, it's equal parts sculpture and geometry lesson."
+    }
+  ];
+
+  document.getElementById('historyList').innerHTML = artifactHistory.map(a => `
+    <details class="ah-item reveal">
+      <summary>
+        <span class="ah-title">${a.name}</span>
+        <span class="ah-era">${a.era}</span>
+        <span class="ah-plus">+</span>
+      </summary>
+      <div class="ah-body"><p>${a.text}</p></div>
+    </details>
+  `).join('');
+</script>
 
 <!-- ABOUT -->
 <section id="about">
